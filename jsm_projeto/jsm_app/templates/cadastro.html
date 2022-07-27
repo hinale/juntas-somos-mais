@@ -1,0 +1,44 @@
+<html>
+  <head>
+    <title>JS+ Cadastro</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style></style>
+  </head>
+  <body>
+    <div class="cadastro-box">
+      <h1 id="logo">JS+ Cadastro</h1>
+      {% if messages %} {% for m in messages %}
+      <div class="alert alert-warning" role="alert">{{ m }}</div>
+      {% endfor %} {% endif %}
+      <form action="{% url 'cadastro' %}" method="POST">
+        {% csrf_token %}
+        <input
+          class="cadastro-input"
+          type="text"
+          placeholder="nome.."
+          name="nome"
+        />
+        <input
+          class="cadastro-input"
+          type="email"
+          placeholder="Email.."
+          name="email"
+        />
+        <input
+          class="cadastro-input"
+          type="password"
+          placeholder="Senha.."
+          name="senha1"
+        />
+        <input
+        class="cadastro-input"
+        type="password"
+        placeholder="Confirme a senha.."
+        name="senha2"
+        />
+        <input class="cadastro-btn" type="submit" value="cadastrar" />
+      </form>
+    </div>
+  </body>
+</html>
