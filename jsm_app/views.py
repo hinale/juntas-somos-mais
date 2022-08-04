@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.http import HttpResponse
 from .forms import DadosForm
+from .models import *
 
 
 def cadastro(request):
@@ -28,3 +29,10 @@ def dados(request):
         form = DadosForm()
     context = {'form': form}
     return render(request, 'dados.html', context)
+
+def listaclientes(request):
+    data = Cliente.objects.all()
+    clientes = {
+        "cliente_number": data
+    }
+    return render(request, 'listaclientes.html', clientes)
