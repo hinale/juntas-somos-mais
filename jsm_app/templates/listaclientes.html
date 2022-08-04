@@ -1,0 +1,8 @@
+// in html file :
+{% for cliente in cliente_number %}
+    Nome: {{ cliente.nome }}, 
+    CPF: {{ cliente.cpf}},
+    Data de nascimento: {{ cliente.nascimento }},
+    Telefone: {{ cliente.telefone }},
+    Profisão: {{ cliente.profissao }}.
+{% endfor %}

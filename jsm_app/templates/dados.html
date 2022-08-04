@@ -1,0 +1,9 @@
+<html>
+    <head></head>
+    <body>
+        <form action="{% url 'dados' %}" method="POST">{% csrf_token %}
+            {{ form.as_p }}
+            <input class="dados-btn" type="submit" value="continuar" />
+        </form>
+    </body>
+</html>
