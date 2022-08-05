@@ -5,3 +5,4 @@ from .models import *
 admin.site.register(Cliente)
 admin.site.register(Endereco)
 admin.site.register(Produto)
+admin.site.register(Categoria)
