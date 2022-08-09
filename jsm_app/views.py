@@ -56,6 +56,14 @@ def produto(request):
         return render(request, 'produto.html', context)
 
 
+def visualizarproduto(request):
+    produto = Produto.objects.all
+    context = {'produto': produto}
+    response = render(request, 'visualizarproduto.html',
+                      context)  # django.http.HttpResponse
+    return render(request, 'visualizarproduto.html', context)
+
+
 def listaclientes(request):
     data = Cliente.objects.all()
     clientes = {
