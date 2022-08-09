@@ -1,0 +1,9 @@
+<legend><b>Relação de Produtos</b></legend>
+<br /><br />
+{% for produto in produto %} Categoria: {{ produto.categoria }}, <br />
+Nome: {{ produto.nome }}, <br />
+Valor: {{ produto.valor }}, <br />
+Quantidade: {{ produto.quantidade }}, <br />
+Imagem: {{ produto.figura }}, <br /><br />
+
+{% endfor %}

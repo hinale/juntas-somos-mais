@@ -7,4 +7,5 @@ urlpatterns = [
     # FUNCIONAL, MAS NÃO É REQUISITO
     path('categoria', views.categoria, name='categoria'),
     path('produto', views.produto, name='produto'),
+    path('visualizarproduto', views.visualizarproduto, name='visualizarproduto'),
 ]
