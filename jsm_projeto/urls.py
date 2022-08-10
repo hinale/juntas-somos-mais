@@ -16,7 +16,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from jsm_app import urls as urlsapp
+from jsm_app.views import PedidoViewSet
+from rest_framework import routers, serializers, viewsets
+
+router = routers.DefaultRouter()
+router.register('Pedido', PedidoViewSet)
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('usuario/', include(urlsapp))
+    path('usuario/', include(urlsapp)),
+    path('api-auth/', include('rest_framework.urls')),
+    path('', include(router.urls)),
 ]
