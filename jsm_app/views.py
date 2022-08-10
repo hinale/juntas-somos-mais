@@ -4,7 +4,8 @@ from django.contrib import messages
 from django.http import HttpResponse
 from .forms import *
 from .models import *
-
+from rest_framework import viewsets
+from .serializers import PedidoSerializer
 
 def cadastro(request):
     if request.method == "GET":
@@ -78,6 +79,10 @@ def pedido(request):
         form = PedidoForm()
     context = {'form': form}
     return render(request, 'pedido.html', context)
+
+class PedidoViewSet(viewsets.ModelViewSet):
+    queryset = Pedido.objects.all()
+    serializer_class = PedidoSerializer
 
 def visualizarpedido(request):
     pedido = Pedido.objects.all
