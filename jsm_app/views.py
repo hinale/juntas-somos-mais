@@ -70,3 +70,22 @@ def listaclientes(request):
         "cliente_number": data
     }
     return render(request, 'listaclientes.html', clientes)
+
+def pedido(request):
+    form = PedidoForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        form = PedidoForm()
+    context = {'form': form}
+    return render(request, 'pedido.html', context)
+
+def visualizarpedido(request):
+    pedido = Pedido.objects.all
+    context = {'pedido': pedido}
+    response = render(request, 'visualizarpedido.html',
+                      context)  # django.http.HttpResponse
+    return render(request, 'visualizarpedido.html', context)
+
+@property
+def valor_total(self):
+    return valor_total (Pedido.quantidade * Produto.valor)

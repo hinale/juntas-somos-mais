@@ -1,0 +1,10 @@
+<legend><b>Visualizar pedido</b></legend>
+<br /><br />
+{% for pedido in pedido %} 
+Cliente: {{ pedido.cliente }} <br />
+Produto: {{ pedido.produto }} <br />
+Data: {{ pedido.data }} <br />
+Quantidade: {{ pedido.quantidade }} <br />
+Valor unitário: {{ pedido.valorUnitario }} <br />
+Valor total: {{ valor_total}} <br /><br>
+{% endfor %}
