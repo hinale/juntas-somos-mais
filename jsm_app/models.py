@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
+from tkinter import CASCADE
 # Os campos de Cliente foram escolhidos de acordo com o que foi observado ser necessario para cadastro no proprio site da JS+. Pensando nisso, deveriamos pensar se fazer um model pra Cliente Fisico e outro pra Juridico seria o correto...levando em conta o site da JS+ (?)
 
 
@@ -50,3 +52,14 @@ class Produto(models.Model):
 
     def __str__(self):
         return self.nome
+
+class Pedido(models.Model):
+    cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
+    produto = models.ForeignKey(Produto,on_delete=models.CASCADE)
+    data = models.DateField(default=timezone.now)
+    quantidade = models.IntegerField(default=1)
+    valorUnitario = models.DecimalField(max_digits=7, decimal_places=2)
+    status = models.CharField(max_length=30, default='NOVO')
+
+    def __str__(self):
+        return self.id
