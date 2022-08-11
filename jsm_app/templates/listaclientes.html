@@ -1,9 +1,35 @@
-<legend><b>Lista de clientes</b></legend>
-<br /><br />
-{% for cliente in cliente_number %} <br>
-    Nome: {{ cliente.nome }}, <br>
-    CPF: {{ cliente.cpf}},<br>
-    Data de nascimento: {{ cliente.nascimento }},<br>
-    Telefone: {{ cliente.telefone }},<br>
-    Profisão: {{ cliente.profissao }}.<br><br>
-{% endfor %}
+{% extends 'base.html' %}
+
+{% block 'titulo' %} Lista de clientes {% endblock %}
+
+{% block 'conteudo' %}
+
+<div class="container">
+    <br><br><br><br><br>
+    <div class="row">
+  
+      <div class="col-md">
+        
+      </div>
+  
+      <div class="col-md">
+        <h1>Lista de Clientes</h1>
+        <hr>{% comment %}  para colocar uma linha abaixo do Lista de clientes {% endcomment %}
+  
+        {% for cliente in cliente_number %} <br>
+            Nome: {{ cliente.nome }}, <br>
+            CPF: {{ cliente.cpf}},<br>
+            Data de nascimento: {{ cliente.nascimento }},<br>
+            Telefone: {{ cliente.telefone }},<br>
+            Profisão: {{ cliente.profissao }}.<br><br><br><br>
+
+        {% endfor %}
+  
+      </div>
+  
+      <div class="col-md">
+        
+      </div>
+
+
+{% endblock %}
