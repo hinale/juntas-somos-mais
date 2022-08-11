@@ -1,9 +1,30 @@
-<html>
-    <head></head>
-    <body>
-        <form action="{% url 'pedido' %}" method="POST">{% csrf_token %}
-            {{ form.as_p }}
-            <input class="dados-btn" type="submit" value="continuar" />
-        </form>
-    </body>
-</html>
+{% extends 'base.html' %}
+
+{% block 'titulo' %} Cadastro de Pedido{% endblock %}
+
+{% block 'conteudo' %}
+<br>
+
+<div class="container">
+  <br><br><br>
+    <div class="row">
+
+        <div class="col-md">
+      
+        </div>
+
+        <div class="col-md">
+            <h2>Cadastro de Pedido</h2>
+            <hr>{% comment %}  para colocar uma linha abaixo do Cadastro de Pedido {% endcomment %}
+  
+            <form action="{% url 'pedido' %}" method="POST">{% csrf_token %}
+                {{ form.as_p }}
+                <input class="dados-btn" type="submit" value="continuar" />
+            </form>
+        </div>
+
+        <div class="col-md">
+          
+        </div>
+        
+{% endblock %}

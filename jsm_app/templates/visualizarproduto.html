@@ -1,9 +1,33 @@
-<legend><b>Relação de Produtos</b></legend>
-<br /><br />
-{% for produto in produto %} Categoria: {{ produto.categoria }}, <br />
-Nome: {{ produto.nome }}, <br />
-Valor: {{ produto.valor }}, <br />
-Quantidade: {{ produto.quantidade }}, <br />
-Imagem: {{ produto.figura }}, <br /><br />
+{% extends 'base.html' %}
 
-{% endfor %}
+{% block 'titulo' %} Lista de produtos {% endblock %}
+
+{% block 'conteudo' %}
+
+<div class="container">
+    <br><br><br><br><br>
+    <div class="row">
+  
+        <div class="col-md">
+        
+        </div>
+  
+        <div class="col-md">
+            <h1>Lista de Produtos</h1>
+            <hr>{% comment %}  para colocar uma linha abaixo do Lista de Produtos {% endcomment %}
+  
+            {% for produto in produto %} Categoria: {{ produto.categoria }}, <br />
+                Nome: {{ produto.nome }}, <br />
+                Valor: {{ produto.valor }}, <br />
+                Quantidade: {{ produto.quantidade }}, <br />
+                Imagem: {{ produto.figura }}, <br /><br />
+
+            {% endfor %}
+        </div>
+  
+        <div class="col-md">
+      
+        </div>
+
+
+{% endblock %}
