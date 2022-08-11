@@ -7,6 +7,11 @@ from .models import *
 from rest_framework import viewsets
 from .serializers import PedidoSerializer
 
+def home(request):
+    data = Produto.objects.all()
+    prod = {"produto_number": data}
+    return render(request, "home.html", prod)
+
 def cadastro(request):
     if request.method == "GET":
         return render(request, 'cadastro.html')
