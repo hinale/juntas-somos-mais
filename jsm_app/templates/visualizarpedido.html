@@ -1,10 +1,34 @@
-<legend><b>Visualizar pedido</b></legend>
-<br /><br />
-{% for pedido in pedido %} 
-Cliente: {{ pedido.cliente }} <br />
-Produto: {{ pedido.produto }} <br />
-Data: {{ pedido.data }} <br />
-Quantidade: {{ pedido.quantidade }} <br />
-Valor unitário: {{ pedido.valorUnitario }} <br />
-Valor total: {{ valor_total}} <br /><br>
-{% endfor %}
+{% extends 'base.html' %}
+
+{% block 'titulo' %} Lista de pedidos {% endblock %}
+
+{% block 'conteudo' %}
+
+<div class="container">
+    <br><br><br><br><br>
+    <div class="row">
+  
+        <div class="col-md">
+        
+        </div>
+  
+        <div class="col-md">
+            <h1>Lista de Pedidos</h1>
+            <hr>{% comment %}  para colocar uma linha abaixo do Lista de Pedidos {% endcomment %}
+  
+            {% for pedido in pedido %} 
+                Cliente: {{ pedido.cliente }} <br />
+                Produto: {{ pedido.produto }} <br />
+                Data: {{ pedido.data }} <br />
+                Quantidade: {{ pedido.quantidade }} <br />
+                Valor unitário: {{ pedido.valorUnitario }} <br />
+                Valor total: {{ valor_total}} <br /><br>
+            {% endfor %}
+        </div>
+  
+        <div class="col-md">
+      
+        </div>
+
+
+{% endblock %}
