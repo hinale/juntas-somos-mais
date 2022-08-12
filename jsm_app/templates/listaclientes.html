@@ -16,13 +16,10 @@
         <h1>Lista de Clientes</h1>
         <hr>{% comment %}  para colocar uma linha abaixo do Lista de clientes {% endcomment %}
   
-        {% for cliente in cliente_number %} <br>
-            Nome: {{ cliente.nome }}, <br>
-            CPF: {{ cliente.cpf}},<br>
-            Data de nascimento: {{ cliente.nascimento }},<br>
-            Telefone: {{ cliente.telefone }},<br>
-            Profisão: {{ cliente.profissao }}.<br><br><br><br>
-
+        {% for usuario in usuario_number %} <br>
+            Nome: {{ usuario.nome }}, <br>
+            Email: {{ usuario.email}},<br>
+            
         {% endfor %}
   
       </div>

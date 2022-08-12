@@ -6,6 +6,37 @@
 
 <div class="container">
   <br> <br> <br> <br> <br>
+
+  {% if status == '0'%}
+  <div class="alert alert-sucess" role="alert">
+     Cadastro realizado com sucesso
+    </div>
+  {% endif %}
+
+  {% if status == '1'%}
+    <div class="alert alert-danger" role="alert">
+      Nome e email não podem estar vazios
+    </div>
+  {% endif %}
+
+  {% if status == '2'%}
+    <div class="alert alert-danger" role="alert">
+      Sua senha deve ter pelo menos 8 caracteres
+    </div>
+  {% endif %}
+
+  {% if status == '3'%}
+    <div class="alert alert-danger" role="alert">
+      Usuário já existe no sistema
+    </div>
+  {% endif %}
+
+  {% if status == '4'%}
+    <div class="alert alert-danger" role="alert">
+      Erro interno do sistema
+    </div>
+  {% endif %}
+
   <div class="row">
 
     <div class="col-md">
@@ -16,7 +47,7 @@
       <h1>Cadastre-se</h1>
       <hr>{% comment %}  para colocar uma linha abaixo do Cadastre-se {% endcomment %}
 
-      <form method="POST" action="{% url 'cadastro' %}">{% csrf_token %}
+      <form method="POST" action="{% url 'valida_cadastro' %}">{% csrf_token %}
         <label>Nome</label>
         <input name="nome" class="form-control" type="text" placeholder="Nome...">
         <br>

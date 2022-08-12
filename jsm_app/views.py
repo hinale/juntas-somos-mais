@@ -6,28 +6,71 @@ from .forms import *
 from .models import *
 from rest_framework import viewsets
 from .serializers import PedidoSerializer
+from hashlib import sha256
+
 
 def home(request):
     data = Produto.objects.all()
     prod = {"produto_number": data}
     return render(request, "home.html", prod)
 
+
+def login(request):
+    status = request.GET.get('status')
+    return render(request, 'login.html', {'status': status})
+
+
+def validar_login(request):
+    email = request.POST.get('email')
+    senha = request.POST.get('senha')
+    senha = sha256(senha.encode()).hexdigest()  # para criptografar a senha
+
+    usuario = Usuario.objects.filter(email=email). filter(senha=senha)
+
+    if len(usuario) == 0:
+        return redirect('/login/?status=1')
+    elif len(usuario) > 0:
+        request.session['usuario'] = usuario[0].id
+        return redirect('/pedido')
+
+    return HttpResponse(f"{email} {senha}")
+
+
+def logout(request):
+    request.session.flush()  # vai deslogar o usuario
+    return redirect('/login/')
+
+
 def cadastro(request):
-    if request.method == "GET":
-        return render(request, 'cadastro.html')
-    else:
-        nome = request.POST.get('nome')
-        email = request.POST.get('email')
-        senha = request.POST.get('senha1')
-        user = User.objects.filter(email=email).first()
-        if user:
-            messages.info(request, 'Usuario já cadastrado.')
-            return redirect('cadastro')
-        user = User.objects.create_user(
-            first_name=nome, username=nome, email=email, password=senha)
-        user.save()
-        return redirect('dados')
-       # return HttpResponse("Cadastrado com sucesso") #redirecionar para inserção de dados pessoais (models Cliente) aka dados
+    status = request.GET.get('status')
+    return render(request, 'cadastro.html', {'status': status})
+
+
+def valida_cadastro(request):
+    nome = request.POST.get('nome')
+    senha = request.POST.get('senha')
+    email = request.POST.get('email')
+
+    usuario = Usuario.objects.filter(email=email)
+
+    # para verificar se o usuário não colocou a informação solicitada e sim apenas espaços
+    if len(nome.strip()) == 0 or len(email.strip()) == 0:
+        return redirect('/cadastro/?status=1')
+
+    if len(senha) < 8:  # para verificar se a senha tem menos de 8 digitos
+        return redirect('/cadastro/?status=2')
+
+    if len(usuario) > 0:  # para verificar se o usuário já existe
+        return redirect('/cadastro/?status=3')
+
+    try:
+        senha = sha256(senha.encode()).hexdigest()  # para criptografar a senha
+        usuario = Usuario(nome=nome, senha=senha, email=email)
+        usuario.save()
+
+        return redirect('/cadastro/?status=0')
+    except:
+        return redirect('/cadastro/?status=4')
 
 
 def dados(request):
@@ -71,11 +114,12 @@ def visualizarproduto(request):
 
 
 def listaclientes(request):
-    data = Cliente.objects.all()
+    data = Usuario.objects.all()
     clientes = {
-        "cliente_number": data
+        "usuario_number": data
     }
     return render(request, 'listaclientes.html', clientes)
+
 
 def pedido(request):
     form = PedidoForm(request.POST or None)
@@ -85,9 +129,11 @@ def pedido(request):
     context = {'form': form}
     return render(request, 'pedido.html', context)
 
+
 class PedidoViewSet(viewsets.ModelViewSet):
     queryset = Pedido.objects.all()
     serializer_class = PedidoSerializer
+
 
 def visualizarpedido(request):
     pedido = Pedido.objects.all
@@ -96,6 +142,7 @@ def visualizarpedido(request):
                       context)  # django.http.HttpResponse
     return render(request, 'visualizarpedido.html', context)
 
+
 @property
 def valor_total(self):
-    return valor_total (Pedido.quantidade * Produto.valor)
+    return valor_total(Pedido.quantidade * Produto.valor)
