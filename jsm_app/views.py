@@ -7,6 +7,7 @@ from .models import *
 from rest_framework import viewsets
 from .serializers import PedidoSerializer
 from hashlib import sha256
+from django.contrib.auth.decorators import login_required
 
 
 def home(request):
@@ -34,6 +35,7 @@ def validar_login(request):
         return redirect('/pedido')
 
     return HttpResponse(f"{email} {senha}")
+
 
 
 def logout(request):
@@ -120,14 +122,17 @@ def listaclientes(request):
     }
     return render(request, 'listaclientes.html', clientes)
 
-
 def pedido(request):
-    form = PedidoForm(request.POST or None)
+    if request.session.get('usuario'):
+        form = PedidoForm(request.POST or None)
+    else:
+        return redirect('/login/?status=2')
     if form.is_valid():
         form.save()
         form = PedidoForm()
     context = {'form': form}
     return render(request, 'pedido.html', context)
+    
 
 
 class PedidoViewSet(viewsets.ModelViewSet):
@@ -143,6 +148,6 @@ def visualizarpedido(request):
     return render(request, 'visualizarpedido.html', context)
 
 
-@property
-def valor_total(self):
-    return valor_total(Pedido.quantidade * Produto.valor)
+
+
+

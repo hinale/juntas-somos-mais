@@ -4,6 +4,8 @@
 
 {% block 'conteudo' %}
 
+{% load static %}
+
 <div class="container">
     <br><br><br><br><br>
     <div class="row">
@@ -20,8 +22,8 @@
                 Nome: {{ produto.nome }}, <br />
                 Valor: {{ produto.valor }}, <br />
                 Quantidade: {{ produto.quantidade }}, <br />
-                Imagem: {{ produto.figura }}, <br /><br />
-
+                Imagem: {{ produto.figura }} , <br /><br />
+                <img src="{% get_static_prefix %}{{ produto.figura }}">
             {% endfor %}
         </div>
   

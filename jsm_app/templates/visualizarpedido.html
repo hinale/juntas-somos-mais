@@ -22,7 +22,7 @@
                 Data: {{ pedido.data }} <br />
                 Quantidade: {{ pedido.quantidade }} <br />
                 Valor unitário: {{ pedido.valorUnitario }} <br />
-                Valor total: {{ valor_total}} <br /><br>
+                Valor total: {% widthratio pedido.valorUnitario 1  pedido.quantidade %} <br /><br>
             {% endfor %}
         </div>
   
