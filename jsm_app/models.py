@@ -5,6 +5,15 @@ from tkinter import CASCADE
 # Os campos de Cliente foram escolhidos de acordo com o que foi observado ser necessario para cadastro no proprio site da JS+. Pensando nisso, deveriamos pensar se fazer um model pra Cliente Fisico e outro pra Juridico seria o correto...levando em conta o site da JS+ (?)
 
 
+class Usuario(models.Model):
+    nome = models.CharField(max_length=100)
+    email = models.EmailField()
+    senha = models.CharField(max_length=64)
+
+    def __str__(self) -> str:
+        return self.nome
+
+
 class Cliente(models.Model):
     user = User
     nome = models.CharField(max_length=100)
@@ -53,9 +62,10 @@ class Produto(models.Model):
     def __str__(self):
         return self.nome
 
+
 class Pedido(models.Model):
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
-    produto = models.ForeignKey(Produto,on_delete=models.CASCADE)
+    produto = models.ForeignKey(Produto, on_delete=models.CASCADE)
     data = models.DateField(default=timezone.now)
     quantidade = models.IntegerField(default=1)
     valorUnitario = models.DecimalField(max_digits=7, decimal_places=2)
