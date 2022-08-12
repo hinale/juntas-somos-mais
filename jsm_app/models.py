@@ -64,7 +64,7 @@ class Produto(models.Model):
 
 
 class Pedido(models.Model):
-    cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
+    cliente = models.ForeignKey(Usuario, on_delete=models.CASCADE)
     produto = models.ForeignKey(Produto, on_delete=models.CASCADE)
     data = models.DateField(default=timezone.now)
     quantidade = models.IntegerField(default=1)
