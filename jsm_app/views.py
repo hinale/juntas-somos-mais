@@ -37,7 +37,6 @@ def validar_login(request):
     return HttpResponse(f"{email} {senha}")
 
 
-
 def logout(request):
     request.session.flush()  # vai deslogar o usuario
     return redirect('/login/')
@@ -122,17 +121,14 @@ def listaclientes(request):
     }
     return render(request, 'listaclientes.html', clientes)
 
+
 def pedido(request):
-    if request.session.get('usuario'):
-        form = PedidoForm(request.POST or None)
-    else:
-        return redirect('/login/?status=2')
+    form = PedidoForm(request.POST or None)
     if form.is_valid():
         form.save()
         form = PedidoForm()
     context = {'form': form}
     return render(request, 'pedido.html', context)
-    
 
 
 class PedidoViewSet(viewsets.ModelViewSet):
@@ -146,8 +142,3 @@ def visualizarpedido(request):
     response = render(request, 'visualizarpedido.html',
                       context)  # django.http.HttpResponse
     return render(request, 'visualizarpedido.html', context)
-
-
-
-
-
