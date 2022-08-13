@@ -60,7 +60,7 @@ class Produto(models.Model):
         upload_to='images/', default='images/default.png')
 
     def __str__(self):
-        return self.nome
+        return f"{self.nome} - {self.valor}"
 
 
 class Pedido(models.Model):
