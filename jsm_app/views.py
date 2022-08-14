@@ -8,7 +8,7 @@ from django.http import HttpResponse
 from .forms import *
 from .models import *
 from rest_framework import viewsets
-from .serializers import PedidoSerializer
+from .serializers import PedidoSerializer, UsuarioSerializer, ProdutoSerializer
 from hashlib import sha256
 from django.contrib.auth.decorators import login_required
 
@@ -38,7 +38,6 @@ def validar_login(request):
         return redirect('/pedido')
 
     return HttpResponse(f"{email} {senha}")
-
 
 
 def logout(request):
@@ -116,6 +115,7 @@ def listaclientes(request):
     }
     return render(request, 'listaclientes.html', clientes)
 
+
 def pedido(request):
     if request.session.get('usuario'):
         form = PedidoForm(request.POST or None)
@@ -126,7 +126,8 @@ def pedido(request):
         form = PedidoForm()
     context = {'form': form}
     return render(request, 'pedido.html', context)
-    
+
+
 def endereco(request):
     if request.method == "GET":
         form = EnderecoForm()
@@ -140,25 +141,39 @@ def endereco(request):
         context = {'form': form}
         return render(request, 'endereco.html', context)
 
+
 class PedidoViewSet(viewsets.ModelViewSet):
     queryset = Pedido.objects.all()
     serializer_class = PedidoSerializer
 
 
 def visualizarpedido(request):
-    if request.session.get('usuario'):    
-        usuario = Usuario.objects.get(id = request.session['usuario'])
-        pedido = Pedido.objects.filter(cliente = usuario) #vai filtrar e só aparecer os pedidos do usuario logado
+    if request.session.get('usuario'):
+        usuario = Usuario.objects.get(id=request.session['usuario'])
+        # vai filtrar e só aparecer os pedidos do usuario logado
+        pedido = Pedido.objects.filter(cliente=usuario)
         return render(request, 'visualizarpedido.html', {'pedido': pedido})
     else:
         return redirect('/login/?status=2')
 
+
 def get_product_priece(request):
     product_id = request.GET.get('product_id', None)
-    data = {'product_priece': Produto.objects.get(id=int(product_id)).valor.real}
+    data = {'product_priece': Produto.objects.get(
+        id=int(product_id)).valor.real}
     return JsonResponse(data)
+
 
 @property
 def valor_total(self):
-    return valor_total (Pedido.quantidade * Produto.valor)
+    return valor_total(Pedido.quantidade * Produto.valor)
 
+
+class UsuarioViewSet(viewsets.ModelViewSet):
+    queryset = Usuario.objects.all()
+    serializer_class = UsuarioSerializer
+
+
+class ProdutoViewSet(viewsets.ModelViewSet):
+    queryset = Produto.objects.all()
+    serializer_class = ProdutoSerializer

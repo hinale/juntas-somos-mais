@@ -16,11 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from jsm_app import urls as urlsapp
-from jsm_app.views import PedidoViewSet
+from jsm_app.views import PedidoViewSet, UsuarioViewSet, ProdutoViewSet
 from rest_framework import routers, serializers, viewsets
 
 router = routers.DefaultRouter()
 router.register('Pedido', PedidoViewSet)
+router.register('Usuario', UsuarioViewSet)
+router.register('Produto', ProdutoViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
