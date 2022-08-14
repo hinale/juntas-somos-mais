@@ -1,141 +1,82 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="pt-BR">
   <head>
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-    <title>Juntas Somos Mais</title>
-    <!-- Font Awesome icons (free version)-->
-    <script
-      src="https://use.fontawesome.com/releases/v6.1.0/js/all.js"
-      crossorigin="anonymous"
-    ></script>
-    <!-- Google fonts-->
-    <link
-      href="https://fonts.googleapis.com/css?family=Montserrat:400,700"
-      rel="stylesheet"
-      type="text/css"
-    />
-    <link
-      href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic"
-      rel="stylesheet"
-      type="text/css"
-    />
-    <!-- Core theme CSS (includes Bootstrap)-->
-    <link href="static/css/styles.css" rel="stylesheet" />
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" >
+    
     {% block 'head' %} {% endblock %}
     <title>{% block 'titulo' %} {% endblock %}</title>
   </head>
-  <body id="page-top">
-    <!-- Navigation-->
-    <nav
-      class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top mr-auto"
-      id="mainNav"
-    >
+  
+  
+  <body>
+    <nav class="navbar fixed-top navbar-expand-lg navbar-light white scrolling-navbar">
       <div class="container">
-        <a class="navbar-brand" href="/">Juntas Somos Mais</a>
-        <button
-          class="navbar-toggler text-uppercase font-weight-bold bg-primary text-white rounded"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarResponsive"
-          aria-controls="navbarResponsive"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          Menu
-          <i class="fas fa-bars"></i>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-          <ul class="navbar-nav ms-auto">
-            <li class="nav-item mx-0 mx-lg-1">
-              <a class="nav-link py-3 px-0 px-lg-3 rounded"
-                href="cadastro/"
-               >Cadastro Clientes</a
-              >
-            </li>
-            <li class="nav-item mx-0 mx-lg-1">
-              <a
-                class="nav-link py-3 px-0 px-lg-3 rounded"
-                href="/listaclientes"
-                >Lista Clientes</a
-              >
-            </li>
-            <li class="nav-item mx-0 mx-lg-1">
-              <a class="nav-link py-3 px-0 px-lg-3 rounded" href="/produto"
-                >Cadastro Produto</a
-              >
-            </li>
-            <li class="nav-item mx-0 mx-lg-1">
-              <a
-                class="nav-link py-3 px-0 px-lg-3 rounded"
-                href="/visualizarproduto"
-                >Lista Produto</a
-              >
-            </li>
-            <li class="nav-item mx-0 mx-lg-1">
-              <a class="nav-link py-3 px-0 px-lg-3 rounded" href="/pedido"
-                >Pedido</a
-              >
-            </li>
-            <li class="nav-item mx-0 mx-lg-1">
-              <a
-                class="nav-link py-3 px-0 px-lg-3 rounded"
-                href="/visualizarpedido"
-                >Lista Pedido</a
-              >
-            </li>
-            <li class="nav-item mx-0 mx-lg-1">
-              <a class="nav-link py-3 px-0 px-lg-3 rounded" href="/login"
-                >Login</a
-              >
-            </li>
-            <li class="nav-item mx-0 mx-lg-1">
-              <a class="nav-link py-3 px-0 px-lg-3 rounded" href="/logout"
-                >Logout</a
-              >
-            </li>
-            <li class="nav-item mx-0 mx-lg-1">
-              <a class="nav-link py-3 px-0 px-lg-3 rounded" href="/admin"
-                >ADM</a
-              >
-            </li>
-            <li class="nav-item mx-0 mx-lg-1">
-              <a
-                class="nav-link py-3 px-0 px-lg-3 rounded"
-                href="https://github.com/hinale/juntas-somos-mais"
-                >JSM GitHub</a
-              >
-            </li>
-          </ul>
-        </div>
+        <!-- Brand -->
+      <a class="navbar-brand waves-effect" href="/" target="_blank">
+        <strong class="blue-text" >JSM E-COMMERCE</strong>
+      </a>
+
+      <!-- Collapse -->
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- Links -->
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+       <!-- Right -->
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link waves-effect" href="/cadastro">Cadastro Clientes</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link waves-effect" href="/listaclientes">Lista Clientes</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link waves-effect" href="/produto">Cadastro Produto</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link waves-effect" href="/visualizarproduto">Lista Produto</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link waves-effect" href="/pedido">Pedido</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link waves-effect" href="/visualizarpedido">Lista Pedido</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link waves-effect" href="/login">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link waves-effect" href="/logout" target="_blank">Logout</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link waves-effect" href="/admin" target="_blank">Admin</a>
+          </li>
+
+          <li class="nav-item">
+            <a href="https://github.com/hinale/juntas-somos-mais"
+              class="nav-link border border-light rounded waves-effect" target="_blank">
+              <i class="fab fa-github mr-2"></i>JSM GitHub
+            </a>
+          </li>
+        </ul>
+
       </div>
-    </nav>
-    {% block 'conteudo' %} {% endblock %}
-  </body>
-  <!-- Footer-->
-  <footer class="footer text-center">
-    <div class="container">
-      <div class="row">
-        <h4 class="text-uppercase mb-4">Team</h4>
-          <div class="col-md-3 img">
-            <img class="img-fluid" src="static/images/Nanda.png" alt="..." />
-          </div>
-          <div class="col-md-3">
-            <img class="img-fluid" src="static/images/Leticia.png" alt="..." />
-          </div>
-          <div class="col-md-3">
-            <img class="img-fluid" src="static/images/Mariana.png" alt="..." />
-          </div>
-          <div class="col-md-3">
-            <img class="img-fluid" src="static/images/Raquel.png" alt="..." />
-          </div>
-        </div>
-      </div>
+
     </div>
-  </footer>
+  </nav>
+
+  {% block 'conteudo' %}{% endblock %}
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+  {% block javascript %}{% endblock %}
+
+</body>
 </html>

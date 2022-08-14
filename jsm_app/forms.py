@@ -7,14 +7,8 @@ class DadosForm(forms.ModelForm):
                           widget=forms.TextInput(attrs={'placeholder': 'Digite só os números'}))
 
     class Meta:
-        model = Cliente
-        fields = {
-            'nome',
-            'cpf',
-            'telefone',
-            'nascimento',
-            'profissao'
-        }
+        model = Usuario
+        fields = '__all__'
 
 
 class CategoriaForm(forms.ModelForm):

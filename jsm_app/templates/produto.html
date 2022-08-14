@@ -14,14 +14,12 @@
     </div>
 
     <div class="col-md">
-      <br><br><br><br>
       <h2>Cadastro de Produtos</h2>
         <hr>{% comment %}  para colocar uma linha abaixo do Cadastro de Produtos {% endcomment %}
   
-      <form action="{% url 'produto' %}" method="POST">
+      <form action="{% url 'produto' %}" method="POST" enctype="multipart/form-data">
         {% csrf_token %} {{ form.as_p }}
         <input class="dados-btn" type="submit" value="continuar" />
-        <br><br>
       </form>
     </div>
 
