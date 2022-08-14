@@ -17,12 +17,12 @@
             <hr>{% comment %}  para colocar uma linha abaixo do Lista de Pedidos {% endcomment %}
   
             {% for pedido in pedido %} 
-                Cliente: {{ pedido.cliente }} <br />
-                Produto: {{ pedido.produto }} <br />
-                Data: {{ pedido.data }} <br />
-                Quantidade: {{ pedido.quantidade }} <br />
-                Valor unitário: {{ pedido.valorUnitario }} <br />
-                Valor total: {% widthratio pedido.valorUnitario 1  pedido.quantidade %} <br /><br>
+                Cliente: {{ pedido.cliente }} <br>
+                Produto: {{ pedido.produto }} <br>
+                Data: {{ pedido.data }} <br>
+                Quantidade: {{ pedido.quantidade }} <br>
+                Valor unitário: {{ pedido.valorUnitario }} <br>
+                Valor total: {% widthratio pedido.valorUnitario 1  pedido.quantidade %} <br><br>
             {% endfor %}
         </div>
   
