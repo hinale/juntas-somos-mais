@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block 'titulo' %} Endereço {% endblock %}
+
+{% block 'conteudo' %}
+
+<div class="container">
+  <br> <br> <br> <br> <br>
+
+  <div class="row">
+
+    <div class="col-md">
+      
+    </div>
+
+    <div class="col-md">
+            <h2>Endereço para entrega</h2>
+            <hr>{% comment %}  para colocar uma linha abaixo do Cadastro de Pedido {% endcomment %}
+  
+            <form action="{% url 'endereco' %}" method="POST">{% csrf_token %}
+                {{ form.as_p }}
+                <input class="dados-btn" type="submit" value="Cadastrar" />
+            </form>
+        </div>
+
+    <div class="col-md">
+      
+    </div>
+{% endblock %}
+

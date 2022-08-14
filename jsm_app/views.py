@@ -127,7 +127,18 @@ def pedido(request):
     context = {'form': form}
     return render(request, 'pedido.html', context)
     
-
+def endereco(request):
+    if request.method == "GET":
+        form = EnderecoForm()
+        context = {'form': form}
+        return render(request, 'endereco.html', context)
+    else:
+        form = EnderecoForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            form = EnderecoForm()
+        context = {'form': form}
+        return render(request, 'endereco.html', context)
 
 class PedidoViewSet(viewsets.ModelViewSet):
     queryset = Pedido.objects.all()
@@ -135,11 +146,12 @@ class PedidoViewSet(viewsets.ModelViewSet):
 
 
 def visualizarpedido(request):
-    pedido = Pedido.objects.all
-    context = {'pedido': pedido}
-    response = render(request, 'visualizarpedido.html',
-                      context)  # django.http.HttpResponse
-    return render(request, 'visualizarpedido.html', context)
+    if request.session.get('usuario'):    
+        usuario = Usuario.objects.get(id = request.session['usuario'])
+        pedido = Pedido.objects.filter(cliente = usuario) #vai filtrar e só aparecer os pedidos do usuario logado
+        return render(request, 'visualizarpedido.html', {'pedido': pedido})
+    else:
+        return redirect('/login/?status=2')
 
 def get_product_priece(request):
     product_id = request.GET.get('product_id', None)

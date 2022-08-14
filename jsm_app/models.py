@@ -36,7 +36,7 @@ class Categoria(models.Model):
 
 
 class Produto(models.Model):
-    categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
+    categoria = models.ForeignKey(Categoria, on_delete=models.DO_NOTHING) #se deletar a  categoria vai ignorar e manter os produtos
     nome = models.CharField(max_length=100)
     valor = models.DecimalField(max_digits=7, decimal_places=2)
     quantidade = models.IntegerField()  # estoque
@@ -49,8 +49,8 @@ class Produto(models.Model):
 
 
 class Pedido(models.Model):
-    cliente = models.ForeignKey(Usuario, on_delete=models.CASCADE)
-    produto = models.ForeignKey(Produto, on_delete=models.CASCADE)
+    cliente = models.ForeignKey(Usuario, on_delete=models.DO_NOTHING)
+    produto = models.ForeignKey(Produto, on_delete=models.DO_NOTHING)
     data = models.DateField(default=timezone.now)
     quantidade = models.IntegerField(default=1)
     valorUnitario = models.DecimalField(max_digits=7, decimal_places=2)
