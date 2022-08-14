@@ -1,3 +1,6 @@
+from itertools import product
+from django.http import JsonResponse
+from urllib.request import Request
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib import messages
@@ -37,6 +40,7 @@ def validar_login(request):
     return HttpResponse(f"{email} {senha}")
 
 
+
 def logout(request):
     request.session.flush()  # vai deslogar o usuario
     return redirect('/login/')
@@ -72,15 +76,6 @@ def valida_cadastro(request):
         return redirect('/cadastro/?status=0')
     except:
         return redirect('/cadastro/?status=4')
-
-
-def dados(request):
-    form = DadosForm(request.POST or None)
-    if form.is_valid():
-        form.save()
-        form = DadosForm()
-    context = {'form': form}
-    return render(request, 'dados.html', context)
 
 
 def categoria(request):
@@ -121,14 +116,17 @@ def listaclientes(request):
     }
     return render(request, 'listaclientes.html', clientes)
 
-
 def pedido(request):
-    form = PedidoForm(request.POST or None)
+    if request.session.get('usuario'):
+        form = PedidoForm(request.POST or None)
+    else:
+        return redirect('/login/?status=2')
     if form.is_valid():
         form.save()
         form = PedidoForm()
     context = {'form': form}
     return render(request, 'pedido.html', context)
+    
 
 
 class PedidoViewSet(viewsets.ModelViewSet):
@@ -142,3 +140,13 @@ def visualizarpedido(request):
     response = render(request, 'visualizarpedido.html',
                       context)  # django.http.HttpResponse
     return render(request, 'visualizarpedido.html', context)
+
+def get_product_priece(request):
+    product_id = request.GET.get('product_id', None)
+    data = {'product_priece': Produto.objects.get(id=int(product_id)).valor.real}
+    return JsonResponse(data)
+
+@property
+def valor_total(self):
+    return valor_total (Pedido.quantidade * Produto.valor)
+

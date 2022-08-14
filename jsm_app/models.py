@@ -2,10 +2,10 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 from tkinter import CASCADE
-# Os campos de Cliente foram escolhidos de acordo com o que foi observado ser necessario para cadastro no proprio site da JS+. Pensando nisso, deveriamos pensar se fazer um model pra Cliente Fisico e outro pra Juridico seria o correto...levando em conta o site da JS+ (?)
 
 
 class Usuario(models.Model):
+    user = User
     nome = models.CharField(max_length=100)
     email = models.EmailField()
     senha = models.CharField(max_length=64)
@@ -13,22 +13,8 @@ class Usuario(models.Model):
     def __str__(self) -> str:
         return self.nome
 
-
-class Cliente(models.Model):
-    user = User
-    nome = models.CharField(max_length=100)
-    cpf = models.CharField(max_length=11)
-    telefone = models.CharField(max_length=11)
-    nascimento = models.DateField()
-    profissao = models.CharField(max_length=30)
-
-    def __str__(self) -> str:
-        return self.nome
-# Endereço não pode ser apenas um campo de Cliente pois contém muitas informações que precisam ser registrados em um certo padrão pra melhor obtenção(?), validação e leitura dos dados
-
-
 class Endereco(models.Model):
-    cliente = models.ForeignKey(Cliente, id)
+    cliente = models.ForeignKey(Usuario, id)
     cep = models.CharField(max_length=10)
     rua = models.CharField(max_length=50)
     numero = models.CharField(max_length=10)
@@ -56,11 +42,10 @@ class Produto(models.Model):
     quantidade = models.IntegerField()  # estoque
     destaque = models.BooleanField(
         null=False, default=0)  # produtos em promocao
-    figura = models.ImageField(
-        upload_to='images/', default='images/default.png')
+    figura = models.ImageField(upload_to='images/')
 
     def __str__(self):
-        return f"{self.nome} - {self.valor}"
+        return self.nome
 
 
 class Pedido(models.Model):

@@ -2,6 +2,27 @@
 
 {% block 'titulo' %} Cadastro de Pedido{% endblock %}
 
+{% block javascript %}
+    <script>
+        $("#id_produto").change(function () {
+        var product_id = $(this).val();
+
+        $.ajax({
+            url: 'get_product_priece',
+            data: {'product_id': product_id },
+            dataType: 'json',
+            success: function (data) {
+                console.log(data);
+                $("#id_valorUnitario").val(data["product_priece"]);
+            },
+            error: function(err) {
+                console.log(err);
+            }
+        });
+        });
+    </script>
+{% endblock %}
+
 {% block 'conteudo' %}
 <br>
 
@@ -14,14 +35,12 @@
         </div>
 
         <div class="col-md">
-            <br><br><br><br>
             <h2>Cadastro de Pedido</h2>
             <hr>{% comment %}  para colocar uma linha abaixo do Cadastro de Pedido {% endcomment %}
   
             <form action="{% url 'pedido' %}" method="POST">{% csrf_token %}
                 {{ form.as_p }}
                 <input class="dados-btn" type="submit" value="continuar" />
-                <br><br>
             </form>
         </div>
 
