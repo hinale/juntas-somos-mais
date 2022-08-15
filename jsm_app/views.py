@@ -115,6 +115,16 @@ def listaclientes(request):
     }
     return render(request, 'listaclientes.html', clientes)
 
+def dar_baixa_estoque(form):
+     
+    # Pega os produtos a partir da instância do formulário 
+    id_produto = form['produto'].value()
+    quantidade = form['quantidade'].value()
+    
+    produto = Produto.objects.get(id=id_produto)
+    produto.quantidade = int(produto.quantidade) - int(quantidade)
+    produto.save()
+    print('Estoque atualizado com sucesso.')
 
 def pedido(request):
     if request.session.get('usuario'):
@@ -123,6 +133,7 @@ def pedido(request):
         return redirect('/login/?status=2')
     if form.is_valid():
         form.save()
+        dar_baixa_estoque(form)
         form = PedidoForm()
     context = {'form': form}
     return render(request, 'pedido.html', context)

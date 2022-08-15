@@ -23,7 +23,7 @@
                 Valor: {{ produto.valor }}, <br />
                 Quantidade: {{ produto.quantidade }}, <br />
                 Imagem: {{ produto.figura }} , <br /><br />
-                <img src="{% get_static_prefix %}{{ produto.figura }}">
+                <img src="/media/{{ produto.figura }}" width="200" height="200"> <br />
             {% endfor %}
         </div>
   
