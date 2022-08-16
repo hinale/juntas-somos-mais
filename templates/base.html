@@ -1,82 +1,134 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
   <head>
     <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Shop Homepage - Start Bootstrap Template</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" >
-    
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+    <!-- jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     {% block 'head' %} {% endblock %}
     <title>{% block 'titulo' %} {% endblock %}</title>
   </head>
-  
-  
+
   <body>
-    <nav class="navbar fixed-top navbar-expand-lg navbar-light white scrolling-navbar">
-      <div class="container">
-        <!-- Brand -->
-      <a class="navbar-brand waves-effect" href="/" target="_blank">
-        <strong class="blue-text" >JSM E-COMMERCE</strong>
-      </a>
-
-      <!-- Collapse -->
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <!-- Links -->
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-
-       <!-- Right -->
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item">
-            <a class="nav-link waves-effect" href="/cadastro">Cadastro Clientes</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link waves-effect" href="/listaclientes">Lista Clientes</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link waves-effect" href="/produto">Cadastro Produto</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link waves-effect" href="/visualizarproduto">Lista Produto</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link waves-effect" href="/pedido">Pedido</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link waves-effect" href="/visualizarpedido">Lista Pedido</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link waves-effect" href="/login">Login</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link waves-effect" href="/logout" target="_blank">Logout</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link waves-effect" href="/admin" target="_blank">Admin</a>
-          </li>
-
-          <li class="nav-item">
-            <a href="https://github.com/hinale/juntas-somos-mais"
-              class="nav-link border border-light rounded waves-effect" target="_blank">
-              <i class="fab fa-github mr-2"></i>JSM GitHub
-            </a>
-          </li>
-        </ul>
-
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container px-4 px-lg-5">
+        <div><a href="/"><img src = "/media/images/Juntas_Somos_+.png" widht="150" height="150" alt=""></a></div>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <!-- <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4"> -->
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/cadastro"
+                >Cadastro Clientes</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link active"
+                aria-current="page"
+                href="/listaclientes"
+                >Lista Clientes</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/produto"
+                >Cadastro Produto</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link active"
+                aria-current="page"
+                href="/visualizarproduto"
+                >Lista Produto</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/login"
+                >Login</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/pedido"
+                >Pedido</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link active"
+                aria-current="page"
+                href="/visualizarpedido"
+                >Listar Pedido</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/logout"
+                >Logout</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/admin"
+                >ADM</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link active"
+                aria-current="page"
+                href="https://github.com/hinale/juntas-somos-mais"
+                >JSM GitHub</a
+              >
+            </li>
+          </ul>
+        </div>
       </div>
+    </nav>
 
-    </div>
-  </nav>
+    <section class="py-5">{% block 'conteudo' %}{% endblock %}</section>
 
-  {% block 'conteudo' %}{% endblock %}
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-  {% block javascript %}{% endblock %}
+    <!-- Footer-->
+    <footer class="py-5 bg-dark">
+      <div class="container">
+        <p class="m-0 text-center text-white">
+          Copyright &copy; Juntas Somos Mais 2022
+        </p>
+      </div>
+    </footer>
 
-</body>
+    {% block javascript %}{% endblock %}
+  </body>
 </html>
