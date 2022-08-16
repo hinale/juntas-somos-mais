@@ -11,17 +11,20 @@ urlpatterns = [
     # FUNCIONAL, MAS NÃO É REQUISITO
     path('categoria', views.categoria, name='categoria'),
     path('produto', views.produto, name='produto'),
-    path('produto/editar/<int:id_produto>',views.editar_produto, name="editar-produto"),
+    path('produto/editar/<int:id_produto>/', views.editar_produto, name="editar-produto"),
+    path('produto/excluir/<int:id_produto>/', views.excluir_produto, name="excluir-poduto"),
     path('visualizarproduto', views.visualizarproduto, name='visualizarproduto'),
     path('pedido', views.pedido, name='pedido'),
+    path('pedido/<int:id_produto>/<int:id_cliente>', views.pedido, name='pedido'),
     path('endereco/', views.endereco, name='endereco'),
-    path('visualizarpedido', views.visualizarpedido, name='visualizarpedido'),
+    path('visualizarpedido/', views.visualizarpedido, name='visualizarpedido'),
     path('login/', views.login, name='login'),
     path('validar_login/', views.validar_login, name='validar_login'),
     path('logout/', views.logout, name='logout'),
     path('get_product_priece', views.get_product_priece, name='get_product_priece'),
-    path('image_upload', views.produto, name='image_upload')
+    path('image_upload', views.produto, name = 'image_upload')
 ]
+
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,

@@ -144,12 +144,22 @@ def dar_baixa_estoque(form):
     print('Estoque atualizado com sucesso.')
 
 
-def pedido(request):
-    if request.session.get('usuario'):
-        form = PedidoForm(request.POST or None)
-    else:
+def pedido(request, id_produto=None, id_cliente=None):
+    if not request.session.get('usuario'):
         return redirect('/login/?status=2')
-    if form.is_valid():
+    
+    if id_produto and id_cliente:
+        produto = Produto.objects.get(id=id_produto)
+        initial_data = {
+            "cliente" : id_cliente,
+            "produto": id_produto,        
+            "valorUnitario": produto.valor
+        }    
+        form = PedidoForm(request.POST or None, initial=initial_data)
+    else:    
+        form = PedidoForm(request.POST or None)
+
+    if form.is_valid():           
         form.save()
         dar_baixa_estoque(form)
         form = PedidoForm()
@@ -192,6 +202,10 @@ def get_product_priece(request):
         id=int(product_id)).valor.real}
     return JsonResponse(data)
 
+def excluir_produto(request, id_produto):
+    produto = Produto.objects.get(id=id_produto)
+    produto.delete()
+    return HttpResponseRedirect(reverse('visualizarproduto'))
 
 class UsuarioViewSet(viewsets.ModelViewSet):
     queryset = Usuario.objects.all()

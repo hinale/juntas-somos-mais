@@ -2,34 +2,58 @@
 
 {% block 'titulo' %} Lista de produtos {% endblock %}
 
+{% block javascript %}
+<script>
+    
+    $(document).ready(function(){
+      $("#myInput").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("#myTable tr").filter(function() {
+          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+      });
+    });
+
+    function confirmar(id){
+        if(confirm("Excluir o produto?")){
+            window.location.href = '/produto/excluir/' + id;
+        }
+        else{
+            return false;
+        }
+    }
+    
+</script>
+{% endblock %}
+
 {% block 'conteudo' %}
-
-{% load static %}
-
 <div class="container">
-    <br><br><br><br><br>
-    <div class="row">
-  
-        <div class="col-md">
-        
-        </div>
-  
-        <div class="col-md">
-            <h1>Lista de Produtos</h1>
-            <hr>{% comment %}  para colocar uma linha abaixo do Lista de Produtos {% endcomment %}
-  
-            {% for produto in produto %} Categoria: {{ produto.categoria }}, <br />
-                Nome: {{ produto.nome }}, <br />
-                Valor: {{ produto.valor }}, <br />
-                Quantidade: {{ produto.quantidade }}, <br />
-                Imagem: {{ produto.figura }} , <br /><br />
-                <img src="/media/{{ produto.figura }}" width="200" height="200"> <br />
+    <input class="form-control" id="myInput" type="text" placeholder="Procurar produto...">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Categoria</th>
+            <th>Nome</th>
+            <th>Valor</th>
+            <th>Quantidade</th>
+            <th>Ações</th>
+        </tr>
+        </thead>
+        <tbody id="myTable">
+        {% if produto %}
+            {% for produto in produto %} 
+                <tr>
+                <td>{{ produto.categoria }}</td>
+                <td>{{ produto.nome }}</td>
+                <td>{{ produto.valor }}</td>
+                <td>{{ produto.quantidade }}</td>
+                <td><a href="{% url 'editar-produto' produto.id %}">Editar</a> | <a href="javascript:void(0);" onclick="confirmar({{ produto.id }})">Excluir</a></td>
+                </tr>
             {% endfor %}
-        </div>
-  
-        <div class="col-md">
-      
-        </div>
-
-
+        {% else %}
+            <tr>NENHUM PRODUTO CADASTRADO</tr>
+        {% endif %}
+        </tbody>
+    </table>
+</div>
 {% endblock %}
