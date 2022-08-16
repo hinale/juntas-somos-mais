@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block 'titulo' %} Cadastro de Produtos{% endblock %}
+
+{% block 'conteudo' %}
+
+<div class="container">
+  <br><br><br>
+  <div class="row">
+
+    <div class="col-md">
+      
+    </div>
+
+    <div class="col-md">
+      <h2>Editar Produto</h2>
+        <hr> {% comment %}  para colocar uma linha abaixo do Cadastro de Produtos {% endcomment %}
+      <form action="{% url 'editar-produto' produto.id %}" method="POST">
+        {% csrf_token %} 
+        {{ form.as_p }}
+        <input class="btn btn-secondary" type="submit" value="continuar" />
+      </form>
+    </div>
+
+    <div class="col-md">
+      
+    </div>
+    
+{% endblock %}
+

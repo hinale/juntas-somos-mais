@@ -1,22 +1,27 @@
 from itertools import product
+from multiprocessing import context
+from urllib import request
 from django.http import JsonResponse
 from urllib.request import Request
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib import messages
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from .forms import *
 from .models import *
 from rest_framework import viewsets
 from .serializers import PedidoSerializer, UsuarioSerializer, ProdutoSerializer
 from hashlib import sha256
 from django.contrib.auth.decorators import login_required
+from django.views.generic import UpdateView
+from django.shortcuts import get_object_or_404
+from django.urls import reverse
 
 
 def home(request):
-    data = Produto.objects.all()
-    prod = {"produto_number": data}
-    return render(request, "home.html", prod)
+    produtos = Produto.objects.all()
+    context = {'produtos': produtos}
+    return render(request, "home.html", context)
 
 
 def login(request):
@@ -100,6 +105,17 @@ def produto(request):
         return render(request, 'produto.html', context)
 
 
+def editar_produto(request, id_produto):
+    produto = Produto.objects.get(pk=id_produto)
+    form = ProdutoForm(request.POST or None, instance=produto)
+    if form.is_valid():
+        form.save()
+        return redirect('visualizarproduto')
+
+    context = {'produto': produto, 'form': form}
+    return render(request, "editar_produto.html", context)
+
+
 def visualizarproduto(request):
     produto = Produto.objects.all
     context = {'produto': produto}
@@ -115,16 +131,18 @@ def listaclientes(request):
     }
     return render(request, 'listaclientes.html', clientes)
 
+
 def dar_baixa_estoque(form):
-     
-    # Pega os produtos a partir da instância do formulário 
+
+    # Pega os produtos a partir da instância do formulário
     id_produto = form['produto'].value()
     quantidade = form['quantidade'].value()
-    
+
     produto = Produto.objects.get(id=id_produto)
     produto.quantidade = int(produto.quantidade) - int(quantidade)
     produto.save()
     print('Estoque atualizado com sucesso.')
+
 
 def pedido(request):
     if request.session.get('usuario'):
@@ -173,11 +191,6 @@ def get_product_priece(request):
     data = {'product_priece': Produto.objects.get(
         id=int(product_id)).valor.real}
     return JsonResponse(data)
-
-
-@property
-def valor_total(self):
-    return valor_total(Pedido.quantidade * Produto.valor)
 
 
 class UsuarioViewSet(viewsets.ModelViewSet):
