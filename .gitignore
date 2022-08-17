@@ -2,7 +2,6 @@
 .jsm_ambiente
 .env
 .idea
-*.sqlite3
 *pyc
 __pycache__
 staticfiles
