@@ -15,13 +15,27 @@
     });
 
     function confirmar(id){
-        if(confirm("Excluir o produto?")){
-            window.location.href = '/produto/excluir/' + id;
-        }
-        else{
-            return false;
-        }
-    }
+        $.ajax({
+            url: 'existepedidos/' + id,
+            dataType: 'json',
+            success: function (data) {
+            console.log(data);
+            if (data.result == true){ 
+            alert("Não é possível excliur o produto porque existem pedidos relacionados.");
+            } 
+            else {
+            
+                if(confirm("Excluir o produto?")){
+                window.location.href = '/produto/excluir/' + id;
+                }
+            }
+            },
+            error: function(err) {
+            console.log(err);
+            }
+            });
+            
+            }
     
 </script>
 {% endblock %}
