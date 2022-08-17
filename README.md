@@ -1,4 +1,4 @@
-![Logo_Marca_Juntas_Somos_+](https://user-images.githubusercontent.com/92063008/185115495-be303788-ba04-4a93-bcf2-fb1d9e1a10d0.png)
+![Logo_Marca_Juntas_Somos_+](https://user-images.githubusercontent.com/92063008/185115495-be303788-ba04-4a93-bcf2-fb1d9e1a10d0.png widht="150" height="150")
 ## Ecommerce Juntas Somos Mais
 
 Projeto Final do Curso Construdelas Python da WoMakersCode em parceria com a empresa Juntos Somos+.
