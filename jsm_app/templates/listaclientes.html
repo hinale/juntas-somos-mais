@@ -6,9 +6,9 @@
 
 <script>
 
-
+  //jquery - essa função escuta a caixinha de filtro, sófunciona quando digitamos na caixinha de texto
   $(document).ready(function(){
-    $("#myInput").on("keyup", function() {
+    $("#myInput").on("keyup", function() { 
       var value = $(this).val().toLowerCase();
       $("#myTable tr").filter(function() {
         $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
@@ -17,12 +17,14 @@
   });
 
   function confirmar(id){
-
-    $.ajax({
+    //ajax - faz a requisição ao servidor sem precisar carregar toda a página
+    //essa função só será ativada quando clicamos no excluir
+    $.ajax({ 
         url: 'clientetempedidos/' + id,
         dataType: 'json',
         success: function (data) {
             console.log(data);
+            //se tiver pedido não vai permitir excluit o cliente
             if (data.result == true){           
                 alert("Não é possível excliur o cliente porque existem pedidos relacionados.");
             } else {
@@ -43,6 +45,7 @@
 
 {% block 'conteudo' %}
 <div class="container">
+  {#caixinha que filtra#}
     <input class="form-control" id="myInput" type="text" placeholder="Procurar cliente...">
     <table class="table table-striped">
         <thead>
