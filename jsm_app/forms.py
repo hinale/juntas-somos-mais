@@ -22,12 +22,20 @@ class ProdutoForm(forms.ModelForm):
         model = Produto
         fields = '__all__'
 
+
 class PedidoForm(forms.ModelForm):
     class Meta:
         model = Pedido
         fields = '__all__'
-        
+
+
 class EnderecoForm(forms.ModelForm):
     class Meta:
         model = Endereco
         fields = '__all__'
+
+
+class UsuarioForm(forms.ModelForm):
+    class Meta:
+        model = Usuario
+        fields = ['nome', 'email']

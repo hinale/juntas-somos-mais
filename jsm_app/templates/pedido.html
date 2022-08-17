@@ -8,23 +8,21 @@
         var product_id = $(this).val();
 
         $.ajax({
-            url: 'get_product_priece' + product_id,
-            data: {'product_id': product_id },
+            url: 'obterproduto/' + product_id,
             dataType: 'json',
             success: function (data) {
-                $("#id_valorUnitario").val(data["valor"]);
+                $("#id_valorUnitario").val(data.fields["valor"]);
             },
             error: function(err) {
                 console.log(err);
             }
         });
         });
-
+        
         $("#id_quantidade").change(function(){
             var product_id = $("#id_produto").val();
-        
             $.ajax({
-                vurl: 'obterproduto/' + product_id,
+                url: 'obterproduto/' + product_id,
                 dataType: 'json',
                 success: function (data) {
 
@@ -32,15 +30,15 @@
                     var estq = data.fields["quantidade"];
 
                     if (qtd > estq) {
-                        alert("Quantidade maior que o estoque disponivel. Estoque atual =  "+ estq);
-                        }
-                    },
-                    error: function(err) {
-                    console.log(err);
+                        alert("Quantidade maior que o estoque.");
                     }
-                    });
-                    
-                    });
+            },
+            error: function(err) {
+                console.log(err);
+            }
+        });
+        
+        });
     </script>
 {% endblock %}
 

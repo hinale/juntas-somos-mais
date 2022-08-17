@@ -20,9 +20,20 @@ from django.core import serializers
 import json
 
 
+def obter_usuario_da_sessao(request):
+    usuario = {
+        "id": request.session.get('usuario'),
+        "nome": request.session.get('nome_usuario'),
+        "email": request.session.get('email_usuario'),
+        "logado": request.session.get('logado'),
+    }
+    return usuario
+
+
 def home(request):
     produtos = Produto.objects.all()
-    context = {'produtos': produtos}
+    usuario = obter_usuario_da_sessao(request)
+    context = {'produtos': produtos, 'usuario': usuario}
     return render(request, "home.html", context)
 
 
@@ -42,6 +53,9 @@ def validar_login(request):
         return redirect('/login/?status=1')
     elif len(usuario) > 0:
         request.session['usuario'] = usuario[0].id
+        request.session['nome_usuario'] = usuario[0].nome
+        request.session['email_usuario'] = usuario[0].email
+        request.session['logado'] = True
         return redirect('/pedido')
 
     return HttpResponse(f"{email} {senha}")
@@ -54,7 +68,8 @@ def logout(request):
 
 def cadastro(request):
     status = request.GET.get('status')
-    return render(request, 'cadastro.html', {'status': status})
+    usuario = obter_usuario_da_sessao(request)
+    return render(request, 'cadastro.html', {'status': status, 'usuario': usuario})
 
 
 def valida_cadastro(request):
@@ -96,7 +111,8 @@ def categoria(request):
 def produto(request):
     if request.method == "GET":
         form = ProdutoForm()
-        context = {'form': form}
+        usuario = obter_usuario_da_sessao(request)
+        context = {'form': form, 'usuario': usuario}
         return render(request, 'produto.html', context)
     else:
         form = ProdutoForm(request.POST, request.FILES)
@@ -120,7 +136,8 @@ def editar_produto(request, id_produto):
 
 def visualizarproduto(request):
     produto = Produto.objects.all
-    context = {'produto': produto}
+    usuario = obter_usuario_da_sessao(request)
+    context = {'produto': produto, 'usuario': usuario}
     response = render(request, 'visualizarproduto.html',
                       context)  # django.http.HttpResponse
     return render(request, 'visualizarproduto.html', context)
@@ -128,10 +145,29 @@ def visualizarproduto(request):
 
 def listaclientes(request):
     data = Usuario.objects.all()
+    usuario = obter_usuario_da_sessao(request)
     clientes = {
-        "usuario_number": data
+        "usuario_number": data,
+        "usuario": usuario
     }
     return render(request, 'listaclientes.html', clientes)
+
+
+def editar_cliente(request, id_cliente):
+    cliente = Usuario.objects.get(id=id_cliente)
+    form = UsuarioForm(request.POST or None, instance=cliente)
+    if form.is_valid():
+        form.save()
+        return redirect('listaclientes')
+    usuario = obter_usuario_da_sessao(request)
+    context = {'cliente': cliente, 'form': form, 'usuario': usuario}
+    return render(request, "editar_cliente.html", context)
+
+
+def excluir_cliente(request, id_cliente):
+    cliente = Usuario.objects.get(id=id_cliente)
+    cliente.delete()
+    return HttpResponseRedirect(reverse('listaclientes'))
 
 
 def dar_baixa_estoque(form):
@@ -149,23 +185,24 @@ def dar_baixa_estoque(form):
 def pedido(request, id_produto=None, id_cliente=None):
     if not request.session.get('usuario'):
         return redirect('/login/?status=2')
-    
+
     if id_produto and id_cliente:
         produto = Produto.objects.get(id=id_produto)
         initial_data = {
-            "cliente" : id_cliente,
-            "produto": id_produto,        
+            "cliente": id_cliente,
+            "produto": id_produto,
             "valorUnitario": produto.valor
-        }    
+        }
         form = PedidoForm(request.POST or None, initial=initial_data)
-    else:    
+    else:
         form = PedidoForm(request.POST or None)
 
-    if form.is_valid():           
+    if form.is_valid():
         form.save()
         dar_baixa_estoque(form)
         form = PedidoForm()
-    context = {'form': form}
+    usuario = obter_usuario_da_sessao(request)
+    context = {'form': form, 'usuario': usuario}
     return render(request, 'pedido.html', context)
 
 
@@ -191,19 +228,23 @@ class PedidoViewSet(viewsets.ModelViewSet):
 def visualizarpedido(request):
     if request.session.get('usuario'):
         usuario = Usuario.objects.get(id=request.session['usuario'])
+
+        u = obter_usuario_da_sessao(request)
+
         # vai filtrar e só aparecer os pedidos do usuario logado
         pedido = Pedido.objects.filter(cliente=usuario)
-        return render(request, 'visualizarpedido.html', {'pedido': pedido})
+        return render(request, 'visualizarpedido.html', {'pedido': pedido, 'usuario': u})
     else:
         return redirect('/login/?status=2')
 
 
 def obter_produto(request, id_produto):
     produto = Produto.objects.get(id=id_produto)
-    data = serializers.serialize('json', [ produto, ])
+    data = serializers.serialize('json', [produto, ])
     struct = json.loads(data)
     data = json.dumps(struct[0])
     return HttpResponse(data)
+
 
 def excluir_produto(request, id_produto):
     produto = Produto.objects.get(id=id_produto)
@@ -214,10 +255,24 @@ def excluir_produto(request, id_produto):
 def existe_pedidos(request, id_produto):
     pedido = Pedido.objects.filter(produto_id=id_produto).first()
     if(pedido):
-        return JsonResponse({"result": True })
+        return JsonResponse({"result": True})
     else:
-        return JsonResponse({"result": False })
-    
+        return JsonResponse({"result": False})
+
+
+def cliente_tem_pedidos(request, id_cliente):
+    pedido = Pedido.objects.filter(cliente_id=id_cliente).first()
+    if(pedido):
+        return JsonResponse({"result": True})
+    else:
+        return JsonResponse({"result": False})
+
+
+def alterar_senha(request):
+    usuario = obter_usuario_da_sessao(request)
+    context = {'status': 1, 'usuario': usuario}
+    return render(request, 'alterar_senha.html', context)
+
 
 class UsuarioViewSet(viewsets.ModelViewSet):
     queryset = Usuario.objects.all()

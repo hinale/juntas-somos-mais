@@ -2,32 +2,66 @@
 
 {% block 'titulo' %} Lista de clientes {% endblock %}
 
-{% block 'conteudo' %}
+{% block javascript %}
 
-<div class="container">
-    
-    <div class="row">
-  
-      <div class="col-md">
-        
-      </div>
-  
-      <div class="col-md">
-       
-        <h1>Lista de Clientes</h1>
-        <hr>{% comment %}  para colocar uma linha abaixo do Lista de clientes {% endcomment %}
-  
-        {% for usuario in usuario_number %} <br>
-            Nome: {{ usuario.nome }}, <br>
-            Email: {{ usuario.email}},<br>
-            
-        {% endfor %}
-        <br><br><br>
-      </div>
-  
-      <div class="col-md">
-        
-      </div>
+<script>
 
 
+  $(document).ready(function(){
+    $("#myInput").on("keyup", function() {
+      var value = $(this).val().toLowerCase();
+      $("#myTable tr").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+      });
+    });
+  });
+
+  function confirmar(id){
+
+    $.ajax({
+        url: 'clientetempedidos/' + id,
+        dataType: 'json',
+        success: function (data) {
+            console.log(data);
+            if (data.result == true){           
+                alert("Não é possível excliur o cliente porque existem pedidos relacionados.");
+            } else {
+                if(confirm("Excluir o cliente?")){
+                    window.location.href = '/cliente/excluir/' + id;
+                }
+            }
+        },
+        error: function(err) {
+            console.log(err);
+        }
+    });
+
+}
+  
+</script>
 {% endblock %}
+
+{% block 'conteudo' %}
+<div class="container">
+    <input class="form-control" id="myInput" type="text" placeholder="Procurar cliente...">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Email</th>
+            <th>Ações</th>
+        </tr>
+        </thead>
+        <tbody id="myTable">
+          {% for  usuario in usuario_number %} 
+            <tr>
+              <td>{{ usuario.nome }}</td>
+              <td>{{ usuario.email }}</td>
+              <td><a href="{% url 'editar-cliente' usuario.id %}">Editar</a> | <a href="javascript:void(0);" onclick="confirmar({{ usuario.id }})">Excluir</a></td>
+            </tr>
+          {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+
