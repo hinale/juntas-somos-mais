@@ -44,7 +44,7 @@ POST /api/Produto/ Cadastrar Produtos
 ```
 
 Contribuintes
-- Fernada
+- Fernanda
 - Leticia Amaral
 - Mariana Moreira
 - Raquel Gomes
