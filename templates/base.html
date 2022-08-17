@@ -26,6 +26,7 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
     />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+    
     <!-- jquery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     {% block 'head' %} {% endblock %}
@@ -36,7 +37,8 @@
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container px-4 px-lg-5">
-        <div><a href="/"><img src = "/media/images/Juntas_Somos_+.png" widht="150" height="150" alt=""></a></div>
+        <div>
+          <a href="/"><img src = "/media/images/Juntas_Somos_+.png" widht="150" height="150" alt=""></a></div>
         <button
           class="navbar-toggler"
           type="button"
@@ -78,11 +80,6 @@
               >
             </li>
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/login"
-                >Login</a
-              >
-            </li>
-            <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="/pedido"
                 >Pedido</a
               >
@@ -95,11 +92,7 @@
                 >Listar Pedido</a
               >
             </li>
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/logout"
-                >Logout</a
-              >
-            </li>
+            
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="/admin"
                 >ADM</a
@@ -113,6 +106,23 @@
                 >JSM GitHub</a
               >
             </li>
+            {% if usuario.logado %}
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">{{ usuario.nome }}</a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="{% url 'editar-cliente' usuario.id %}">Editar</a></li>
+                <li><a class="dropdown-item" href="{% url 'alterar-senha' %}">Alterar Senha</a></li>
+                <li><hr class="dropdown-divider" /></li>
+                <li><a class="dropdown-item" href="/logout">Sair</a></li>
+              </ul>
+            </li>
+            {% else %}            
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/login"
+                >Login</a
+              >
+            </li>
+            {% endif %}
           </ul>
         </div>
       </div>

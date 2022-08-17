@@ -23,7 +23,11 @@ urlpatterns = [
     path('logout/', views.logout, name='logout'),    
     path('obterproduto/<int:id_produto>', views.obter_produto, name='obter-produto'),
     path('image_upload', views.produto, name = 'image_upload'),
-    path('existepedidos/<int:id_produto>', views.existe_pedidos, name = 'existe-pedidos')
+    path('existepedidos/<int:id_produto>', views.existe_pedidos, name = 'existe-pedidos'),
+    path('cliente/editar/<int:id_cliente>/', views.editar_cliente, name="editar-cliente"),
+    path('cliente/excluir/<int:id_cliente>/', views.excluir_cliente, name="excluir-cliente"),
+    path('clientetempedidos/<int:id_cliente>', views.cliente_tem_pedidos, name = 'cliente-tem-pedidos'),
+    path('alterarsenha', views.alterar_senha, name = 'alterar-senha')
 ]
 
 

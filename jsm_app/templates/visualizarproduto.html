@@ -15,27 +15,26 @@
     });
 
     function confirmar(id){
+
         $.ajax({
             url: 'existepedidos/' + id,
             dataType: 'json',
             success: function (data) {
-            console.log(data);
-            if (data.result == true){ 
-            alert("Não é possível excliur o produto porque existem pedidos relacionados.");
-            } 
-            else {
-            
-                if(confirm("Excluir o produto?")){
-                window.location.href = '/produto/excluir/' + id;
+                console.log(data);
+                if (data.result == true){           
+                    alert("Não é possível excliur o produto porque existem pedidos relacionados.");
+                } else {
+                    if(confirm("Excluir o produto?")){
+                        window.location.href = '/produto/excluir/' + id;
+                    }
                 }
-            }
             },
             error: function(err) {
-            console.log(err);
+                console.log(err);
             }
-            });
-            
-            }
+        });
+
+    }
     
 </script>
 {% endblock %}
@@ -50,7 +49,9 @@
             <th>Nome</th>
             <th>Valor</th>
             <th>Quantidade</th>
+            {% if usuario.logado %}
             <th>Ações</th>
+            {% endif %}
         </tr>
         </thead>
         <tbody id="myTable">
@@ -61,7 +62,9 @@
                 <td>{{ produto.nome }}</td>
                 <td>{{ produto.valor }}</td>
                 <td>{{ produto.quantidade }}</td>
+                {% if usuario.logado %}
                 <td><a href="{% url 'editar-produto' produto.id %}">Editar</a> | <a href="javascript:void(0);" onclick="confirmar({{ produto.id }})">Excluir</a></td>
+                {% endif %}
                 </tr>
             {% endfor %}
         {% else %}
