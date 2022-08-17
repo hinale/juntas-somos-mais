@@ -20,9 +20,10 @@ urlpatterns = [
     path('visualizarpedido/', views.visualizarpedido, name='visualizarpedido'),
     path('login/', views.login, name='login'),
     path('validar_login/', views.validar_login, name='validar_login'),
-    path('logout/', views.logout, name='logout'),
-    path('get_product_priece', views.get_product_priece, name='get_product_priece'),
-    path('image_upload', views.produto, name = 'image_upload')
+    path('logout/', views.logout, name='logout'),    
+    path('obterproduto/<int:id_produto>', views.obter_produto, name='obter-produto'),
+    path('image_upload', views.produto, name = 'image_upload'),
+    path('existepedidos/<int:id_produto>', views.existe_pedidos, name = 'existe-pedidos')
 ]
 
 

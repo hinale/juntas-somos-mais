@@ -16,6 +16,8 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic import UpdateView
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
+from django.core import serializers
+import json
 
 
 def home(request):
@@ -196,16 +198,26 @@ def visualizarpedido(request):
         return redirect('/login/?status=2')
 
 
-def get_product_priece(request):
-    product_id = request.GET.get('product_id', None)
-    data = {'product_priece': Produto.objects.get(
-        id=int(product_id)).valor.real}
-    return JsonResponse(data)
+def obter_produto(request, id_produto):
+    produto = Produto.objects.get(id=id_produto)
+    data = serializers.serialize('json', [ produto, ])
+    struct = json.loads(data)
+    data = json.dumps(struct[0])
+    return HttpResponse(data)
 
 def excluir_produto(request, id_produto):
     produto = Produto.objects.get(id=id_produto)
     produto.delete()
     return HttpResponseRedirect(reverse('visualizarproduto'))
+
+
+def existe_pedidos(request, id_produto):
+    pedido = Pedido.objects.filter(produto_id=id_produto).first()
+    if(pedido):
+        return JsonResponse({"result": True })
+    else:
+        return JsonResponse({"result": False })
+    
 
 class UsuarioViewSet(viewsets.ModelViewSet):
     queryset = Usuario.objects.all()
