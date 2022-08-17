@@ -5,6 +5,7 @@
 {% block javascript %}
 <script>
     
+    //jquery - essa função escuta a caixinha de filtro, sófunciona quando digitamos na caixinha de texto
     $(document).ready(function(){
       $("#myInput").on("keyup", function() {
         var value = $(this).val().toLowerCase();
@@ -14,6 +15,8 @@
       });
     });
 
+     //ajax - faz a requisição ao servidor sem precisar carregar toda a página
+    //essa função só será ativada quando clicamos no excluir
     function confirmar(id){
 
         $.ajax({

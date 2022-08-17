@@ -1,15 +1,25 @@
+from itertools import product
+from multiprocessing import context
+from urllib import request
+from django.http import JsonResponse
+from urllib.request import Request
 from django.shortcuts import render, redirect
-from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from django.contrib.auth.models import User
+from django.contrib import messages
+from django.http import HttpResponse, HttpResponseRedirect
 from .forms import *
 from .models import *
 from rest_framework import viewsets
 from .serializers import PedidoSerializer, UsuarioSerializer, ProdutoSerializer
 from hashlib import sha256
+from django.contrib.auth.decorators import login_required
+from django.views.generic import UpdateView
+from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.core import serializers
 import json
 
-#Obtém os valores das variáveis de sessão
+
 def obter_usuario_da_sessao(request):
     usuario = {
         "id": request.session.get('usuario'),
@@ -101,14 +111,16 @@ def categoria(request):
 def produto(request):
     if request.method == "GET":
         form = ProdutoForm()
+        usuario = obter_usuario_da_sessao(request)
+        context = {'form': form, 'usuario': usuario}
+        return render(request, 'produto.html', context)
     else:
         form = ProdutoForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             form = ProdutoForm()
-    usuario = obter_usuario_da_sessao(request)
-    context = {'form': form, 'usuario': usuario}
-    return render(request, 'produto.html', context)
+        context = {'form': form}
+        return render(request, 'produto.html', context)
 
 
 def editar_produto(request, id_produto):
@@ -117,8 +129,8 @@ def editar_produto(request, id_produto):
     if form.is_valid():
         form.save()
         return redirect('visualizarproduto')
-    usuario = obter_usuario_da_sessao(request)
-    context = {'produto': produto, 'form': form, 'usuario': usuario}
+
+    context = {'produto': produto, 'form': form}
     return render(request, "editar_produto.html", context)
 
 
@@ -239,7 +251,7 @@ def excluir_produto(request, id_produto):
     produto.delete()
     return HttpResponseRedirect(reverse('visualizarproduto'))
 
-#se temos produto relacionado ao pedido
+
 def existe_pedidos(request, id_produto):
     pedido = Pedido.objects.filter(produto_id=id_produto).first()
     if(pedido):
@@ -247,7 +259,7 @@ def existe_pedidos(request, id_produto):
     else:
         return JsonResponse({"result": False})
 
-#se temos cliente relacionado ao pedido
+
 def cliente_tem_pedidos(request, id_cliente):
     pedido = Pedido.objects.filter(cliente_id=id_cliente).first()
     if(pedido):

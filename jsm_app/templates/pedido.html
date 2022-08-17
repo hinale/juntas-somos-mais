@@ -4,9 +4,10 @@
 
 {% block javascript %}
     <script>
+        //Obtem o valor do produto do banco de dados e preenche o valor da linha 15
         $("#id_produto").change(function () {
         var product_id = $(this).val();
-
+            
         $.ajax({
             url: 'obterproduto/' + product_id,
             dataType: 'json',
@@ -18,7 +19,7 @@
             }
         });
         });
-        
+        // Vai no banco de dados e obtem a quantidade que tem em estoque e compara a quantidade digitada com a disponível no estoque
         $("#id_quantidade").change(function(){
             var product_id = $("#id_produto").val();
             $.ajax({
