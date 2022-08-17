@@ -19,7 +19,7 @@
   
       <form action="{% url 'produto' %}" method="POST" enctype="multipart/form-data">
         {% csrf_token %} {{ form.as_p }}
-        <input class="dados-btn" type="submit" value="Cadastrar" />
+        <input class="btn btn-info btn-warning" type="submit" value="Cadastrar" />
       </form>
     </div>
 
